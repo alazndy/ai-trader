@@ -5,3 +5,4 @@ requests==2.31.0
 firebase-admin==6.4.0
 streamlit==1.31.0
 emoji==2.10.0
+pytz==2023.3.post1
