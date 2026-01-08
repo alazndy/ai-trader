@@ -1,0 +1,7 @@
+pandas==2.2.0
+yfinance==0.2.36
+colorama==0.4.6
+requests==2.31.0
+firebase-admin==6.4.0
+streamlit==1.31.0
+emoji==2.10.0

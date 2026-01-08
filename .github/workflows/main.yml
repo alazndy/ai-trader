@@ -1,0 +1,39 @@
+name: AI Trader Bot
+
+on:
+  schedule:
+    - cron: "*/15 * * * *" # Every 15 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas yfinance firebase-admin requests colorama
+
+      - name: Create Firebase Credentials File
+        run: |
+          echo '${{ secrets.FIREBASE_CREDENTIALS_JSON }}' > firebase_key.json
+        env:
+          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS_JSON }}
+
+      - name: Run Cloud Bot
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: firebase_key.json
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python run_cloud.py
+
+      - name: Cleanup
+        if: always()
+        run: rm firebase_key.json

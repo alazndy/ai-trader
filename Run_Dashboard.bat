@@ -1,0 +1,9 @@
+@echo off
+echo Starting AI Trader Command Center...
+echo Trying direct launch...
+call "C:\Users\turha\AppData\Roaming\Python\Python313\Scripts\streamlit.cmd" run dashboard.py
+if %errorlevel% neq 0 (
+    echo Direct launch failed. Trying module launch...
+    python -m streamlit run dashboard.py
+)
+pause
