@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas yfinance firebase-admin requests colorama
+          pip install -r requirements.txt
 
       - name: Create Firebase Credentials File
         run: |
