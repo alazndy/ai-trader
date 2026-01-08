@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow the Bot (Service Account) to read/write everything
+    // But deny public access.
+    // In Cloud Run, requests are authenticated as the Service Account.
+    
+    match /trader_strategies/{strategy} {
+      allow read, write: if request.auth != null;
+    }
+    
+    match /trader_strategies/{strategy}/trades/{trade} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
